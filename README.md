@@ -1,12 +1,12 @@
 # AllyInvest.py
-A blackbox Ally Invest/TradeKing API implementationn for application developers.
+A blackbox Ally Invest/TradeKing API interface for application developers.
 
 AllyAPI.py
 A Python3 class that allows access to all of the functionality in the
 Ally/TradeKing API.
 
 This package attempts to stay on top of changes to the API and allow an
-easy to user iterface with the Ally Invest API. The API does no formatting
+easy to user interface with the Ally Invest API. The API does no formatting
 for the user. A response format of 'xml' or 'json' can be specified and
 the API responses will be returned as the raw XML or JSON, respectively.
 

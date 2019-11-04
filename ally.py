@@ -1,4 +1,4 @@
-"""@package AllyAPI.py
+"""@file AllyInvest.py
     A Python3 class that allows access to all of the functionality in the
     Ally/TradeKing API.
 
@@ -40,8 +40,6 @@ class AllyAPI:
             GET market/options/expirations
             GET market/timesales
         WATCHLIST
-            GET watchlists
-            POST watchlists
             GET watchlists/:id
             DELETE watchlists/:id
             POST watchlists/:id/symbols
@@ -49,20 +47,20 @@ class AllyAPI:
         STREAMING OPERATIONS
             MARKET
                 GET market/quotes
-
-    Parameters
-        @param self - the object pointer
-        @param oauth_secret - secret oauth key from Ally
-        @param oauth_token - oauth token from Ally
-        @param client_key - client key from Ally
-        @param response_format - format of the response. Valid values are 'xml' and 'json'.
-            Specifying 'xml' will return an ElementTree containing the response XML while
-            'json' will return the response in the JSON format.
     """
     def __init__(self, oauth_secret, oauth_token, client_key,
                 response_format="json"):
         """AllyAPI constructor. Sets the response format on all of the URLs and
             the oauth/client keys required to access the API.
+
+            Parameters
+                @param self - the object pointer
+                @param oauth_secret - secret oauth key from Ally
+                @param oauth_token - oauth token from Ally
+                @param client_key - client key from Ally
+                @param response_format - format of the response. Valid values are 'xml' and 'json'.
+                    Specifying 'xml' will return an ElementTree containing the response XML while
+                    'json' will return the response in the JSON format.
         """
         self.format = response_format
         self.url = URLs(response_format=response_format)
@@ -117,6 +115,15 @@ class AllyAPI:
         """
         self.__create_auth()
         return self.__to_format(requests.get(url, auth=self.auth))
+
+    def __submit_post(self, url, data):
+        """A private method to submit a post request to the Ally Invest server
+            @param self - the object pointer
+            @param url - API URL to access
+            @param data - payload for the HTTP request
+        """
+        self.__create_auth()
+        return self.__to_format(requests.post(url, data=data, auth=self.auth))
 
     def get_accounts(self):
         """Returns all of the user's accounts."""
@@ -243,3 +250,25 @@ class AllyAPI:
             @param self - the object pointer
         """
         return self.__get_data(self.url.version_url())
+
+    def get_watchlists(self):
+        """Retrieves all watchlists belonging to the member.
+            @param self - the object pointer
+        """
+        return self.__get_data(self.url.get_watchlists_url())
+
+
+    def create_watchlist(self, watchlist_name, symbols=""):
+        """Creates a watchlist and adds a symbol or list of symbols to a watchlist.
+            WARNING: There appears to be an issue when adding a list of symbols.
+                It is recommended that one ticker symbol is added at a time.
+            @param self - the object pointer
+            @param watchist_id - name of the watchlist
+            @param symbols - single ticker or list of tickers to add to the watchlist
+        """
+        print("WARNING create_watchlist(): There appears to be an issue when adding a list of symbols.\
+            It is recommended that one ticker symbol is added at a time.")
+        payload = {"id": watchlist_name}
+        if not symbols == "":
+            payload["symbols"] = symbols
+        return self.__submit_post(self.url.post_watchlist_url(), payload)
