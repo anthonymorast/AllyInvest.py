@@ -140,19 +140,19 @@ class AllyAPI:
         """
         return self.__get_data(self.url.account_holdings_url().format(id=str(id)))
 
-    def 
+
 
 
         # market
-        self.clock = "market/clock.{format}".format(format=self.format)
-        self.quote = "market/ext/quotes.{format}".format(format=self.format)
-        self.news_search = "/market/news/search.{format}".format(format=self.format)
-        self.news_article = "market/news/{article_id}.{format}".format(format=self.format, article_id="{article_id}")
-        self.toplists = "market/toplists/topgainers.{format}".format(format=self.format)
-
-        # member
-        self.member_profile = "member/profile.{format}".format(format=self.format)
-
-        # Utilities
-        self.status = "utility/status.{format}".format(format=self.format)
-        self.version = "utility/version.{format}".format(format=self.format)
+        # self.clock = "market/clock.{format}".format(format=self.format)
+        # self.quote = "market/ext/quotes.{format}".format(format=self.format)
+        # self.news_search = "/market/news/search.{format}".format(format=self.format)
+        # self.news_article = "market/news/{article_id}.{format}".format(format=self.format, article_id="{article_id}")
+        # self.toplists = "market/toplists/topgainers.{format}".format(format=self.format)
+        #
+        # # member
+        # self.member_profile = "member/profile.{format}".format(format=self.format)
+        #
+        # # Utilities
+        # self.status = "utility/status.{format}".format(format=self.format)
+        # self.version = "utility/version.{format}".format(format=self.format)
