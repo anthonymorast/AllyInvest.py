@@ -189,8 +189,8 @@ class AllyAPI:
             raise Exception("Start date is after end date in news search.")
 
         url = self.url.news_search_url() + "?symbols={syms}&maxhits={mxhits}".format(mxhits=maxhits)
-        if startdate is not None and enddate is note None:
-            url = url + "&startdate={sdate}&enddate={edate}"
+        if startdate is not None and enddate is not None:
+            url = (url + "&startdate={sdate}&enddate={edate}") \
                 .format(sdate=startdate.strftime("%m/%d/%Y"), edate=enddate.strftime("%m/%d/%Y"))
 
         symbols = self.__get_quote_string(symbols)
