@@ -85,6 +85,20 @@ class AllyAPI:
             self.auth = OAuth1(self.client_key, self.client_secret, self.oauth_token,
                           self.oauth_secret, signature_type='auth_header')
 
+    def __get_quote_string(self, symbols):
+        """Returns a string that is either a single quote or a comma-separated
+            list of quotes depending on the type of quotes.
+            @param self - the object pointer
+            @param symbols - single ticker or list of ticker to get quotes for
+        """
+        symbolsstr = ""
+        if isinstance(symbols, basestring): # string
+            symbolsstr = symbols
+        else: # list
+            for quote in symbols:
+                symbolsstr += (quote) + ","
+        return symbolsstr
+
     def __to_format(self, response):
         """A private method to return the API response in the desired format
             @param self - the object pointer
@@ -140,19 +154,92 @@ class AllyAPI:
         """
         return self.__get_data(self.url.account_holdings_url().format(id=str(id)))
 
+    def get_market_clock(self):
+        """Returns the state of the market, the time until next state change,
+            and current server timestamp.
+            @param self - the object pointer
+        """
+        return self.__get_data(self.url.clock_url())
 
+    def get_quote(self, symbols):
+        """Returns quote information for a single ticker or list of tickers.
+            Note: this function does not implement selecting customer FIDs as
+            described in the API documentation. These can be filtered from the return
+            if need be.
+            @param self - the object pointer
+            @param symbols - single ticker or list of ticker to get quotes for
+        """
+        url = self.url.quote_url()+"?symbols={symbols}"
+        symbols = self.__get_quote_string(symbols)
+        return self.__get_data(url.format(symbols=symbols))
 
+    def news_search(self, symbols, startdate=None, enddate=None, maxhits=10):
+        """Retrieves a listing of news headlines based on symbols.
+            @param self - the object pointer
+            @param symbols - single ticker or list of ticker to get quotes for
+            @param startdate - search for articles between this date and enddate
+            @param enddate - search for articles between this date and startdate
+            @param maxhits - number of articles to return
+        """
+        if startdate is None or enddate is None:
+            print("news_search: either enddate or startdate is not specified, ignoring both.")
 
-        # market
-        # self.clock = "market/clock.{format}".format(format=self.format)
-        # self.quote = "market/ext/quotes.{format}".format(format=self.format)
-        # self.news_search = "/market/news/search.{format}".format(format=self.format)
-        # self.news_article = "market/news/{article_id}.{format}".format(format=self.format, article_id="{article_id}")
-        # self.toplists = "market/toplists/topgainers.{format}".format(format=self.format)
-        #
-        # # member
-        # self.member_profile = "member/profile.{format}".format(format=self.format)
-        #
-        # # Utilities
-        # self.status = "utility/status.{format}".format(format=self.format)
-        # self.version = "utility/version.{format}".format(format=self.format)
+        if (startdate is not None and enddate is not None) and (enddate < startdate):
+            print("news_search: start date is after end date.")
+            raise Exception("Start date is after end date in news search.")
+
+        url = self.url.news_search_url() + "?symbols={syms}&maxhits={mxhits}".format(mxhits=maxhits)
+        if startdate is not None and enddate is note None:
+            url = url + "&startdate={sdate}&enddate={edate}"
+                .format(sdate=startdate.strftime("%m/%d/%Y"), edate=enddate.strftime("%m/%d/%Y"))
+
+        symbols = self.__get_quote_string(symbols)
+        return self.__get_data(url.format(syms=symbols))
+
+    def get_news_article(self, article_id):
+        """Gets a single news article based on the article ID. This ID can be retrieved
+            from the news_search()  function.
+            @param self - the object pointer
+            @param article_id - ID of the article to retrieve
+        """
+        return self.__get_data(self.url.news_article_url().format(article_id=article_id))
+
+    def get_toplists(self, listtype="topgainers", exchange="N"):
+        """Returns a ranked list depending on listtype and exchange.
+            @param listtype - type of list to be queried, accepted values are:
+                'toplosers': top losers by dollar amount
+                'toppctlosers': top percentage losers
+                'topvolume': top volume
+                'topactive': top active
+                'topgainers': top gainers by dollar amount (default)
+                'toppctgainers': top percentage gainers
+            @param exchange - exchange to be queried, accepted values are:
+                'A': American Stock Exchange
+                'N': New York Stock Exchange (default)
+                'Q': NASDAQ
+                'U': NASDAQ Bulletin Board
+                'V': NASDAQ OTC Other
+        """
+        url = self.url.toplists_url().format(listtype=listtype)
+        url += (url+"?exchange={ex}").format(ex=exchange)
+        return self.__get_data(url)
+
+    def get_member_profile(self):
+        """Returns general information associated with the user including account
+            numbers and account information.
+            @param self - the object pointer
+        """
+        return self.__get_data(self.url.member_profile_url())
+
+    def get_status(self):
+        """Returns an error if the API endpoint/server is unavailable. Otherwise
+            returns the current server timestamp.
+            @param self - the object pointer
+        """
+        return self.__get_data(self.url.status_url())
+
+    def get_version(self):
+        """Gets the current version of the API of the endpoint called.
+            @param self - the object pointer
+        """
+        return self.__get_data(self.url.version_url())

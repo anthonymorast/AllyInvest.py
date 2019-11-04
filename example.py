@@ -8,4 +8,4 @@ OAUTH_SECRET = "OAUTH TOKEN SECRET"
 
 if __name__ == "__main__":
      ally = AllyAPI(OAUTH_SECRET, OAUTH_TOKEN, CONSUMER_KEY, response_format="json")
-     print(ally.get_account_holdings(39860390))
+     print(ally.get_accounts())
