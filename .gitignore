@@ -2,3 +2,4 @@ html/
 latex/
 keys.txt
 example_keys.py
+__pycache__/

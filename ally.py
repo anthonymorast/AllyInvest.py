@@ -140,6 +140,8 @@ class AllyAPI:
         """
         return self.__get_data(self.url.account_holdings_url().format(id=str(id)))
 
+    def 
+
 
         # market
         self.clock = "market/clock.{format}".format(format=self.format)
