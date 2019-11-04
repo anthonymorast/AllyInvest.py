@@ -1,4 +1,4 @@
-"""@file AllyInvest.py
+"""@package AllyAPI
     A Python3 class that allows access to all of the functionality in the
     Ally/TradeKing API.
 
@@ -266,8 +266,7 @@ class AllyAPI:
             @param watchist_id - name of the watchlist
             @param symbols - single ticker or list of tickers to add to the watchlist
         """
-        print("WARNING create_watchlist(): There appears to be an issue when adding a list of symbols.\
-            It is recommended that one ticker symbol is added at a time.")
+        print("WARNING create_watchlist(): There appears to be an issue when adding a list of symbols. It is recommended that one ticker symbol is added at a time.")
         payload = {"id": watchlist_name}
         if not symbols == "":
             payload["symbols"] = symbols

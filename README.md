@@ -16,6 +16,15 @@ accessing and managing the requests and responses.
 
 This project was inspired my PyAlly (https://github.com/alienbrett/PyAlly).
 
+# Documentation
+
+Doxygen was used to generate documentation for this interface. The generated
+documentation can be found [here](http://www.anthonymorast.com/allyinvestapi/).
+
+Perhaps the most useful documentation is of the [AllyAPI class](http://www.anthonymorast.com/allyinvestapi/classally_1_1_ally_a_p_i.html)
+as this documentation shows which functionality is available and describes how to
+use each function.
+
 # Usage
 
 Details coming soon. Some basic usage can be found in example.py until then.

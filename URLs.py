@@ -1,4 +1,4 @@
-"""@file AllyInvest.py
+"""@package URLs
 
     A Python3 class that allows access to all of the functionality in the
     Ally/TradeKing API.
@@ -208,7 +208,7 @@ class URLs:
     """
     def get_watchlists_url(self):
         """Combines the request endpoint and watchlist get URLs. Note this is the
-        same URL as the POST call (post_watchlist_url()).
+        same URL as the POST call (URLs.post_watchlist_url()).
         """
         return self.base_url + self.watchlists
 
