@@ -92,7 +92,7 @@ class AllyAPI:
             @param symbols - single ticker or list of ticker to get quotes for
         """
         symbolsstr = ""
-        if isinstance(symbols, basestring): # string
+        if isinstance(symbols, str): # string
             symbolsstr = symbols
         else: # list
             for quote in symbols:
@@ -188,9 +188,9 @@ class AllyAPI:
             print("news_search: start date is after end date.")
             raise Exception("Start date is after end date in news search.")
 
-        url = self.url.news_search_url() + "?symbols={syms}&maxhits={mxhits}".format(mxhits=maxhits)
+        url = self.url.news_search_url() + "?symbols={syms}&maxhits={mxhits}".format(mxhits=maxhits, syms="{syms}")
         if startdate is not None and enddate is not None:
-            url = (url + "&startdate={sdate}&enddate={edate}") \
+            url += "&startdate={sdate}&enddate={edate}" \
                 .format(sdate=startdate.strftime("%m/%d/%Y"), edate=enddate.strftime("%m/%d/%Y"))
 
         symbols = self.__get_quote_string(symbols)
@@ -221,7 +221,7 @@ class AllyAPI:
                 'V': NASDAQ OTC Other
         """
         url = self.url.toplists_url().format(listtype=listtype)
-        url += (url+"?exchange={ex}").format(ex=exchange)
+        url += "?exchange={ex}".format(ex=exchange)
         return self.__get_data(url)
 
     def get_member_profile(self):
