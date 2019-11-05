@@ -83,19 +83,15 @@ class AllyAPI:
             self.auth = OAuth1(self.client_key, self.client_secret, self.oauth_token,
                           self.oauth_secret, signature_type='auth_header')
 
-    def __get_quote_string(self, symbols):
+    def __get_symbol_string(self, symbols):
         """Returns a string that is either a single quote or a comma-separated
             list of quotes depending on the type of quotes.
             @param self - the object pointer
             @param symbols - single ticker or list of ticker to get quotes for
         """
-        symbolsstr = ""
-        if isinstance(symbols, str): # string
-            symbolsstr = symbols
-        else: # list
-            for quote in symbols:
-                symbolsstr += (quote) + ","
-        return symbolsstr
+        if not isinstance(symbols, str): # list
+            symbols = ",".join(symbols)
+        return symbols
 
     def __to_format(self, response):
         """A private method to return the API response in the desired format
@@ -177,7 +173,7 @@ class AllyAPI:
             @param symbols - single ticker or list of ticker to get quotes for
         """
         url = self.url.quote_url()+"?symbols={symbols}"
-        symbols = self.__get_quote_string(symbols)
+        symbols = self.__get_symbol_string(symbols)
         return self.__get_data(url.format(symbols=symbols))
 
     def news_search(self, symbols, startdate=None, enddate=None, maxhits=10):
@@ -200,7 +196,7 @@ class AllyAPI:
             url += "&startdate={sdate}&enddate={edate}" \
                 .format(sdate=startdate.strftime("%m/%d/%Y"), edate=enddate.strftime("%m/%d/%Y"))
 
-        symbols = self.__get_quote_string(symbols)
+        symbols = self.__get_symbol_string(symbols)
         return self.__get_data(url.format(syms=symbols))
 
     def get_news_article(self, article_id):
