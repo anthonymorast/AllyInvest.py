@@ -1,4 +1,4 @@
-from ally import *
+from ally.ally import *
 
 ## These values are from Ally Invest API Applications page.
 CONSUMER_KEY = "CONSUMER KEY"
