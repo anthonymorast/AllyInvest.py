@@ -20,7 +20,7 @@ import datetime
 import requests
 import json
 
-from . import URLs
+from .URLs import URLs
 
 class AllyAPI:
     """The AllyAPI class providing blackbox use of the Ally Invest API.
