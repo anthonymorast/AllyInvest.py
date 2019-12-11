@@ -13,20 +13,20 @@ class Holding():
         	self.assetclass = json['assetclass']
         if 'cfi' in json:
         	self.cfi = json['cfi']
-        if 'change' in json:
-        	self.change = json['change']
+        if 'change' in json['quote']:
+        	self.change = json['quote']['change']
         if 'costbasis' in json:
         	self.costbasis = json['costbasis']
-        if 'cusip' in json:
-        	self.cusip = json['cusip']
+        if 'cusip' in json['instrument']:
+        	self.cusip = json['instrument']['cusip']
         if 'desc' in json:
         	self.desc = json['desc']
-        if 'factor' in json:
-        	self.factor = json['factor']
+        if 'factor' in json['instrument']:
+        	self.factor = json['instrument']['factor']
         if 'gainloss' in json:
         	self.gainloss = json['gainloss']
-        if 'lastprice' in json:
-        	self.lastprice = json['lastprice']
+        if 'lastprice' in json['quote']:
+        	self.lastprice = json['quote']['lastprice']
         if 'marketvalue' in json:
         	self.marketvalue = json['marketvalue']
         if 'marketvaluechange' in json:
@@ -45,13 +45,11 @@ class Holding():
         	self.putcall = json['putcall']
         if 'qty' in json:
         	self.qty = json['qty']
-        if 'sectyp' in json:
-        	self.sectyp = json['sectyp']
+        if 'sectyp' in json['instrument']:
+        	self.sectyp = json['instrument']['sectyp']
         if 'strkpx' in json:
         	self.strkpx = json['strkpx']
-        if 'sym' in json:
-        	self.sym = json['sym']
-        if 'symbol' in json:
-        	self.symbol = json['symbol']
+        if 'sym' in json['instrument']:
+        	self.sym = json['instrument']['sym']
         if 'totalsecurities' in json:
         	self.totalsecurities = json['totalsecurities']
