@@ -4,8 +4,6 @@ from .holding import *
 class AccountHoldingsResponse(Response):
     def __init__(self, account_id, response_format, data):
         super().__init__(response_format, data)
-        self.raw_data = data
-        self.response_format = response_format
         self.account_id = account_id
         self.holdings = []
         if response_format.lower() == 'xml':
@@ -28,6 +26,3 @@ class AccountHoldingsResponse(Response):
 
     def get_holdings(self):
         return self.holdings
-
-    def get_raw_data(self):
-        return self.raw_data
