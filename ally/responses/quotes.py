@@ -15,9 +15,14 @@ class QuotesResponse(Response):
 
     def __parse_json(self, data):
         super().parse_json(data)
-        for quote_json in self.json['quotes']['quote']:
+        if isinstance(self.json['quotes']['quote'], list):
+            for quote_json in self.json['quotes']['quote']:
+                quote = Quote()
+                quote.from_json(quote_json)
+                self.quotes.append(quote)
+        else:
             quote = Quote()
-            quote.from_json(quote_json)
+            quote.from_json(self.json['quotes']['quote'])
             self.quotes.append(quote)
 
     def get_quotes(self):
