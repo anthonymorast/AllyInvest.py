@@ -194,5 +194,5 @@ class Quote():
             self.xmonth = json['xmonth']
         if 'xyear' in json:
             self.xyear = json['xyear']
-        # if 'yield' in json:
-        # 	self.yield = json['yield']
+        if 'yield' in json:
+            self.yld = json['yield']
