@@ -1,6 +1,12 @@
 # AllyInvest.py
 A blackbox Ally Invest/TradeKing API interface for application developers.
 
+AllyInvest.py is a part of the PyPi repository and can be installed via
+
+```
+  pip install AllyInvestPy
+```
+
 AllyAPI.py
 A Python3 class that allows access to all of the functionality in the
 Ally/TradeKing API.
