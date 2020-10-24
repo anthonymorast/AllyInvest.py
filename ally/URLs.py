@@ -54,6 +54,9 @@ class URLs:
         self.news_search = "/market/news/search.{format}".format(format=self.format)
         self.news_article = "market/news/{article_id}.{format}".format(format=self.format, article_id="{article_id}")
         self.toplists = "market/toplists/{listtype}.{format}".format(format=self.format, listtype="{listtype}")
+        self.options_search = "market/options/search.{format}".format(format=self.format)
+        self.options_strikes = "market/options/strikes.{format}".format(format=self.format)
+        self.options_exps = "market/options/expirations.{format}".format(format=self.format)
 
         # member
         self.member_profile = "member/profile.{format}".format(format=self.format)
@@ -173,6 +176,15 @@ class URLs:
             @param self - the object pointer
         """
         return self.base_url + self.toplists
+    
+    def options_search_url(self):
+        return self.base_url + self.options_search
+
+    def options_strikes_url(self):
+        return self.base_url + self.options_strikes
+
+    def options_exps_url(self):
+        return self.base_url + self.options_exps
 
     """
         Member

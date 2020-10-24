@@ -1,0 +1,188 @@
+************* Module ally
+ally.py:52: [C0330(bad-continuation), ] Wrong continued indentation (add 1 space).
+                response_format="json"):
+                ^|
+ally.py:84: [C0330(bad-continuation), ] Wrong continued indentation (add 5 spaces).
+                          self.oauth_secret, signature_type='auth_header')
+                          ^    |
+ally.py:194: [C0301(line-too-long), ] Line too long (115/100)
+ally.py:265: [C0301(line-too-long), ] Line too long (165/100)
+ally.py:23: [E0402(relative-beyond-top-level), ] Attempted relative import beyond top-level package
+ally.py:25: [R0902(too-many-instance-attributes), AllyAPI] Too many instance attributes (9/7)
+ally.py:81: [C0121(singleton-comparison), AllyAPI.__create_auth] Comparison to None should be 'expr is None'
+ally.py:86: [R0201(no-self-use), AllyAPI.__get_symbol_string] Method could be a function
+ally.py:101: [R1705(no-else-return), AllyAPI.__to_format] Unnecessary "else" after "return"
+ally.py:132: [W0622(redefined-builtin), AllyAPI.get_account] Redefining built-in 'id'
+ally.py:132: [C0103(invalid-name), AllyAPI.get_account] Argument name "id" doesn't conform to snake_case naming style
+ally.py:139: [W0622(redefined-builtin), AllyAPI.get_account_balances] Redefining built-in 'id'
+ally.py:139: [C0103(invalid-name), AllyAPI.get_account_balances] Argument name "id" doesn't conform to snake_case naming style
+ally.py:146: [W0622(redefined-builtin), AllyAPI.get_account_history] Redefining built-in 'id'
+ally.py:146: [C0103(invalid-name), AllyAPI.get_account_history] Argument name "id" doesn't conform to snake_case naming style
+ally.py:153: [W0622(redefined-builtin), AllyAPI.get_account_holdings] Redefining built-in 'id'
+ally.py:153: [C0103(invalid-name), AllyAPI.get_account_holdings] Argument name "id" doesn't conform to snake_case naming style
+ally.py:267: [C0113(unneeded-not), AllyAPI.create_watchlist] Consider changing "not symbols == ''" to "symbols != ''"
+ally.py:21: [W0611(unused-import), ] Unused import json
+ally.py:18: [C0411(wrong-import-order), ] standard import "from xml.etree import ElementTree" should be placed before "from requests_oauthlib import OAuth1"
+ally.py:19: [C0411(wrong-import-order), ] standard import "import datetime" should be placed before "from requests_oauthlib import OAuth1"
+ally.py:21: [C0411(wrong-import-order), ] standard import "import json" should be placed before "from requests_oauthlib import OAuth1"
+************* Module __init__
+__init__.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+__init__.py:1: [E0401(import-error), ] Unable to import '__init__.ally'
+__init__.py:2: [E0401(import-error), ] Unable to import '__init__.URLs'
+__init__.py:3: [E0401(import-error), ] Unable to import '__init__.responses'
+__init__.py:4: [E0401(import-error), ] Unable to import '__init__.requests'
+************* Module URLs
+URLs.py:47: [C0301(line-too-long), ] Line too long (103/100)
+URLs.py:48: [C0301(line-too-long), ] Line too long (101/100)
+URLs.py:49: [C0301(line-too-long), ] Line too long (103/100)
+URLs.py:55: [C0301(line-too-long), ] Line too long (117/100)
+URLs.py:56: [C0301(line-too-long), ] Line too long (111/100)
+URLs.py:1: [C0103(invalid-name), ] Module name "URLs" doesn't conform to snake_case naming style
+URLs.py:17: [R0902(too-many-instance-attributes), URLs] Too many instance attributes (17/7)
+URLs.py:68: [E0202(method-hidden), URLs.base_url] An attribute defined in URLs line 38 hides this method
+URLs.py:94: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:137: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:146: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:179: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:188: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:208: [W0105(pointless-string-statement), URLs] String statement has no effect
+URLs.py:224: [W0105(pointless-string-statement), URLs] String statement has no effect
+
+
+Report
+======
+149 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |3      |NC         |NC         |66.67       |33.33    |
++---------+-------+-----------+-----------+------------+---------+
+|class    |2      |NC         |NC         |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |40     |NC         |NC         |100.00      |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    requests (ally)
+    requests_oauthlib (ally)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |181    |35.98 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |239    |47.51 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |25     |4.97  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |58     |11.53 |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |20     |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |4      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |12     |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |6      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++---------+------+--------+---------+-----------+
+|module   |error |warning |refactor |convention |
++=========+======+========+=========+===========+
+|__init__ |66.67 |0.00    |0.00     |5.00       |
++---------+------+--------+---------+-----------+
+|URLs     |16.67 |58.33   |25.00    |30.00      |
++---------+------+--------+---------+-----------+
+|ally     |16.67 |41.67   |75.00    |65.00      |
++---------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++-----------------------------+------------+
+|message id                   |occurrences |
++=============================+============+
+|pointless-string-statement   |7           |
++-----------------------------+------------+
+|line-too-long                |7           |
++-----------------------------+------------+
+|invalid-name                 |5           |
++-----------------------------+------------+
+|redefined-builtin            |4           |
++-----------------------------+------------+
+|import-error                 |4           |
++-----------------------------+------------+
+|wrong-import-order           |3           |
++-----------------------------+------------+
+|too-many-instance-attributes |2           |
++-----------------------------+------------+
+|bad-continuation             |2           |
++-----------------------------+------------+
+|unused-import                |1           |
++-----------------------------+------------+
+|unneeded-not                 |1           |
++-----------------------------+------------+
+|singleton-comparison         |1           |
++-----------------------------+------------+
+|relative-beyond-top-level    |1           |
++-----------------------------+------------+
+|no-self-use                  |1           |
++-----------------------------+------------+
+|no-else-return               |1           |
++-----------------------------+------------+
+|missing-module-docstring     |1           |
++-----------------------------+------------+
+|method-hidden                |1           |
++-----------------------------+------------+
+
+
+
+
+-----------------------------------
+Your code has been rated at 5.57/10
+
