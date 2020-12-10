@@ -15,11 +15,20 @@ if __name__ == "__main__":
      print(ally.get_quote(["AAPL", "MSFT", "XLNX", "NXPI"]))
      print(ally.news_search("AAPL"))
      print(ally.news_search(["AAPL", "MSFT", "XLNX", "NXPI"]))
+    
 
+     ##NOTE: this is the preferred way to get quotes! The response classes are a little 
+     ##      easier to work with than the JSON.
      quote_request = QuotesRequest(symbols=['SND', 'PRU', 'HMC'])
      response = quote_request.execute(ally)
      print(response.get_raw_data())
 
+     quote_request = QuotesRequest(symbols=ticker_list)
+     response = quote_request.execute(ally)
+     for quote in response.get_quotes():
+          # process quote data 
+          pass
+          
      accounts_balances_request = AccountsBalancesRequest()
      accounts_balances_response = accounts_balances_request.execute(ally)
      print(accounts_balances_response.get_raw_data())
