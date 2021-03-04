@@ -183,6 +183,27 @@ class AllyAPI:
         symbols = self.__get_symbol_string(symbols)
         return self.__get_data(url.format(symbols=symbols))
 
+    def get_option_quote(self, symbol, expiration_date, strike_price, put_call):
+        """Returns a quote for an option for the symbol, expiration date, strike price 
+            and put/call specifier.
+
+            @param self - object pointer
+            @param symbol - underlying stock's ticker symbol
+            @param expiration_date - options expiration date
+            @param strike_price - option's strike price
+            @param put_call - c=call, p=put
+        """
+        url = self.url.quote_url() + "?symbols={sym}"
+        if not isinstance(expiration_date, datetime.datetime):
+            print("In 'get_option_quote': datetime.datetime expected for expiration date.")
+            return None
+
+        sym = "{sym}{year}{month:02d}{day:02d}{putcall}{strike}"
+        strike = str(int(strike_price*1000)).zfill(8)
+        sym = sym.format(sym=symbol.upper(), year=str(expiration_date.year)[-2:], month=expiration_date.month, 
+                        day=expiration_date.day, putcall=put_call.upper(), strike=strike)
+        return self.__get_data(url.format(sym=sym))
+
     def news_search(self, symbols, startdate=None, enddate=None, maxhits=10):
         """Retrieves a listing of news headlines based on symbols.
             @param self - the object pointer
@@ -232,6 +253,18 @@ class AllyAPI:
         """
         url = self.url.toplists_url().format(listtype=listtype)
         url += "?exchange={ex}".format(ex=exchange)
+        return self.__get_data(url)
+    
+    def get_options(self, symbol):
+        url = self.url.options_search_url() + ("?symbol={}".format(symbol))
+        return self.__get_data(url)
+
+    def get_options_strikes(self, symbol):
+        url = self.url.options_strikes_url() + ("?symbol={}".format(symbol))
+        return self.__get_data(url)
+
+    def get_options_expirations(self, symbol):
+        url = self.url.options_exps_url() + ("?symbol={}".format(symbol))
         return self.__get_data(url)
 
     def get_member_profile(self):

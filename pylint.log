@@ -1,0 +1,146 @@
+************* Module example_keys
+example_keys.py:10: [W0311(bad-indentation), ] Bad indentation. Found 5 spaces, expected 4
+example_keys.py:17: [C0303(trailing-whitespace), ] Trailing whitespace
+example_keys.py:26: [W0311(bad-indentation), ] Bad indentation. Found 5 spaces, expected 4
+example_keys.py:27: [W0311(bad-indentation), ] Bad indentation. Found 5 spaces, expected 4
+example_keys.py:28: [W0311(bad-indentation), ] Bad indentation. Found 5 spaces, expected 4
+example_keys.py:29: [W0311(bad-indentation), ] Bad indentation. Found 5 spaces, expected 4
+example_keys.py:30: [C0301(line-too-long), ] Line too long (127/100)
+example_keys.py:30: [W0311(bad-indentation), ] Bad indentation. Found 9 spaces, expected 8
+example_keys.py:55: [C0301(line-too-long), ] Line too long (121/100)
+example_keys.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+example_keys.py:1: [W0401(wildcard-import), ] Wildcard import ally
+example_keys.py:50: [W0105(pointless-string-statement), ] String statement has no effect
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import URLs from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountBalancesResponse from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import json from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import Response from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountsBalancesResponse from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import QuotesResponse from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import Quote from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountHoldingsResponse from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import Holding from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import Request from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountBalancesRequest from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountsBalancesRequest from wildcard import
+example_keys.py:1: [W0614(unused-wildcard-import), ] Unused import AccountHoldingsRequest from wildcard import
+************* Module setup
+setup.py:1: [C0114(missing-module-docstring), ] Missing module docstring
+
+
+Report
+======
+17 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |2      |NC         |NC         |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |0      |NC         |NC         |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    ally (example_keys)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |50     |61.73 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|docstring |2      |2.47  |NC       |NC         |
++----------+-------+------+---------+-----------+
+|comment   |15     |18.52 |NC       |NC         |
++----------+-------+------+---------+-----------+
+|empty     |14     |17.28 |NC       |NC         |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |NC       |NC         |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |NC       |NC         |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |5      |NC       |NC         |
++-----------+-------+---------+-----------+
+|refactor   |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+|warning    |21     |NC       |NC         |
++-----------+-------+---------+-----------+
+|error      |0      |NC       |NC         |
++-----------+-------+---------+-----------+
+
+
+
+% errors / warnings by module
+-----------------------------
+
++-------------+------+--------+---------+-----------+
+|module       |error |warning |refactor |convention |
++=============+======+========+=========+===========+
+|example_keys |0.00  |100.00  |0.00     |80.00      |
++-------------+------+--------+---------+-----------+
+|setup        |0.00  |0.00    |0.00     |20.00      |
++-------------+------+--------+---------+-----------+
+
+
+
+Messages
+--------
+
++---------------------------+------------+
+|message id                 |occurrences |
++===========================+============+
+|unused-wildcard-import     |13          |
++---------------------------+------------+
+|bad-indentation            |6           |
++---------------------------+------------+
+|missing-module-docstring   |2           |
++---------------------------+------------+
+|line-too-long              |2           |
++---------------------------+------------+
+|wildcard-import            |1           |
++---------------------------+------------+
+|trailing-whitespace        |1           |
++---------------------------+------------+
+|pointless-string-statement |1           |
++---------------------------+------------+
+
+
+
+
+------------------------------------
+Your code has been rated at -5.29/10
+
