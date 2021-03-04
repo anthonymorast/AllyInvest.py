@@ -98,6 +98,13 @@ class AllyAPI:
             @param self - the object pointer
             @param response - response from the Ally Invest API
         """
+        if response.status_code != 200:
+            if response.status_code == 429:
+                print("Too many requests.")
+                exit()
+            elif response.status_code == 414:
+                print("URI too long, please chunk ticker symbols.")
+                exit()
         if self.format == "json":
             return response.json()
         else:
