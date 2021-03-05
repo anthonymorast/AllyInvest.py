@@ -183,12 +183,6 @@ class AllyAPI:
         symbols = self.__get_symbol_string(symbols)
         return self.__get_data(url.format(symbols=symbols))
 
-    def __get_option_quote_symbol(self, symbol, exp_date, strike, put_call):
-        sym = "{sym}{year}{month:02d}{day:02d}{putcall}{strike}"
-        strike = str(int(strike*1000)).zfill(8)
-        return sym.format(sym=symbol.upper(), year=str(exp_date.year)[-2:], month=exp_date.month,
-                        day=exp_date.day, putcall=put_call.upper(), strike=strike)
-
     def get_option_quote(self, symbol, expiration_date, strike_price, put_call):
         """Returns a quote for an option for the symbol, expiration date, strike price
             and put/call specifier.
@@ -200,27 +194,14 @@ class AllyAPI:
             @param put_call - c=call, p=put
         """
         url = self.url.quote_url() + "?symbols={sym}"
-
-        if isinstance(symbol, str): # single ticker
-            if not isinstance(expiration_date, datetime.datetime):
-                print("In 'get_option_quote': datetime.datetime expected for expiration date.")
-                return None
-            sym = self.__get_option_quote_symbol(symbol, expiration_date, strike_price, put_call)
-        elif isinstance(symbol, list) and isinstance(expiration_date, list) \
-            and isinstance(strike_price, list) and isinstance(put_call, list):
-            if not isinstance(expiration_date[0], datetime.datetime):
-                print("In 'get_option_quote': datetime.datetime expected for expiration date.")
-                return None
-            request_sym = []
-            for i in range(len(symbol)):
-                request_sym.append(self.__get_option_quote_symbol(symbol[i], expiration_date[i],
-                            strike_price[i], put_call[i]))
-            sym = self.__get_symbol_string(request_sym)
-        else:
-            print("In 'get_option_quote': symbol, expiration_date, strike_price, and put_call \
-                  must all be single values or lists.")
+        if not isinstance(expiration_date, datetime.datetime):
+            print("In 'get_option_quote': datetime.datetime expected for expiration date.")
             return None
 
+        sym = "{sym}{year}{month:02d}{day:02d}{putcall}{strike}"
+        strike = str(int(strike_price*1000)).zfill(8)
+        sym = sym.format(sym=symbol.upper(), year=str(expiration_date.year)[-2:], month=expiration_date.month,
+                        day=expiration_date.day, putcall=put_call.upper(), strike=strike)
         return self.__get_data(url.format(sym=sym))
 
     def news_search(self, symbols, startdate=None, enddate=None, maxhits=10):
@@ -243,7 +224,8 @@ class AllyAPI:
             url += "&startdate={sdate}&enddate={edate}" \
                 .format(sdate=startdate.strftime("%m/%d/%Y"), edate=enddate.strftime("%m/%d/%Y"))
 
-        return self.__get_data(url.format(syms=self.__get_symbol_string(symbols)))
+        symbols = self.__get_symbol_string(symbols)
+        return self.__get_data(url.format(syms=symbols))
 
     def get_news_article(self, article_id):
         """Gets a single news article based on the article ID. This ID can be retrieved
@@ -274,6 +256,7 @@ class AllyAPI:
         return self.__get_data(url)
 
     def get_options(self, symbol):
+        print("ehrherh")
         url = self.url.options_search_url() + ("?symbol={}".format(symbol))
         return self.__get_data(url)
 

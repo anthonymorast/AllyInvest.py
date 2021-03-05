@@ -12,6 +12,7 @@ ally/requests/__init__.py
 ally/requests/account_balances.py
 ally/requests/account_holdings.py
 ally/requests/accounts_balances.py
+ally/requests/option_quote.py
 ally/requests/quotes.py
 ally/requests/request.py
 ally/responses/__init__.py
