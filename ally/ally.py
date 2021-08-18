@@ -93,7 +93,20 @@ class AllyAPI:
             symbols = ",".join(symbols)
         return symbols
 
-    def __to_format(self, response):
+    def __get_fixml(self, ticker, amount, type, account, side, tif, price, sectype):
+        fixml = "<FIXML xmlns=\"http://www.fixprotocol.org/FIXML-5-0-SP2\">"
+        fixml += "<Order"
+        if type != ORDER_TYPE.MARKET and tif is not None:
+            fixml += " TmInForce=\"{}\"".format(tif)
+        if type != ORDER_TYPE.MARKET:
+            fixml += " Px=\"{}\"".format(price)
+        fixml += " Typ=\"{}\" Side=\"{}\" Acct=\"{}\">".format(type, side, account)
+        fixml += "<Instrmt SecTyp=\"{}\" Sym=\"{}\"/>".format(sectype, ticker)
+        fixml += "<OrdQty Qty=\"{}\"/></Order></FIXML>".format(amount)
+
+        return fixml
+
+    def __to_format(self, response, xml=False):
         """A private method to return the API response in the desired format
             @param self - the object pointer
             @param response - response from the Ally Invest API
@@ -105,7 +118,7 @@ class AllyAPI:
             elif response.status_code == 414:
                 print("URI too long, please chunk ticker symbols.")
                 exit()
-        if self.format == "json":
+        if self.format == "json" and not xml:
             return response.json()
         else:
             return ElementTree.fromstring(response.content)
@@ -119,14 +132,15 @@ class AllyAPI:
         self.__create_auth()
         return self.__to_format(requests.get(url, auth=self.auth))
 
-    def __submit_post(self, url, data):
+    def __submit_post(self, url, data, headers={}, usexml=False):
         """A private method to submit a post request to the Ally Invest server
             @param self - the object pointer
             @param url - API URL to access
             @param data - payload for the HTTP request
         """
         self.__create_auth()
-        return self.__to_format(requests.post(url, data=data, auth=self.auth))
+        res = requests.post(url, headers=headers, data=data, auth=self.auth)
+        return self.__to_format(res, usexml)
 
     def get_accounts(self):
         """Returns all of the user's accounts."""
@@ -325,3 +339,43 @@ class AllyAPI:
         if not symbols == "":
             payload["symbols"] = symbols
         return self.__submit_post(self.url.post_watchlist_url(), payload)
+
+    def order_common_stock(self, ticker, shares, type, account_nbr, side,
+                            time_in_force=None, price=None):
+        """Creates an order for common stock (as opposed to options).
+            @param self - object pointer
+            @param ticker - ticker symbol of the security to purchase
+            @param shares - the number of shares to purchase
+            @param type - the order type: Market, Limit, Stop, or Stop Limit
+                - use the provided enum for these values
+            @param account_nbr - the account number for which the shares are to be purchased
+            @param side - the side of the trade: Buy or Sell
+                - use the provided enum for these values
+            @param time_in_force - not applicable for market orders: Day Order, Good til Cancelled, Market on Close
+                - use the provided enum for these values
+            @param price - the price to purchase the security (only for limit and stop limit orders)
+        """
+        if price == None and type != ORDER_TYPE.MARKET:
+            raise("Price is required for non-market order types.")
+        payload = self.__get_fixml(ticker, shares, type, account_nbr, side, time_in_force, price, "CS")
+        headers = {
+            'TKI_OVERRIDE': 'true',
+            'Content-Type': 'application/xml',
+        }
+        url = self.url.get_post_order().format(id=account_nbr)
+        return self.__submit_post(url, payload, headers, True)
+
+class TIME_IN_FORCE:
+    DAY = "0"
+    GTC = "1"
+    MARKET_ON_CLOSE = "7"
+
+class ORDER_TYPE:
+    MARKET = "1"
+    LIMIT = "2"
+    STOP = "3"
+    STOP_LIMIT = "4"
+
+class SIDE:
+    BUY = "1"
+    SELL = "2"

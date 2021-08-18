@@ -1,4 +1,5 @@
 from ally import *
+from xml.etree.ElementTree import tostring
 
 ## These values are from Ally Invest API Applications page.
 CONSUMER_KEY = "CONSUMER KEY"
@@ -15,9 +16,8 @@ if __name__ == "__main__":
      print(ally.get_quote(["AAPL", "MSFT", "XLNX", "NXPI"]))
      print(ally.news_search("AAPL"))
      print(ally.news_search(["AAPL", "MSFT", "XLNX", "NXPI"]))
-    
 
-     ##NOTE: this is the preferred way to get quotes! The response classes are a little 
+     ##NOTE: this is the preferred way to get quotes! The response classes are a little
      ##      easier to work with than the JSON.
      quote_request = QuotesRequest(symbols=['SND', 'PRU', 'HMC'])
      response = quote_request.execute(ally)
@@ -26,9 +26,19 @@ if __name__ == "__main__":
      quote_request = QuotesRequest(symbols=ticker_list)
      response = quote_request.execute(ally)
      for quote in response.get_quotes():
-          # process quote data 
+          # process quote data
+          print(quote)
           pass
-          
+
      accounts_balances_request = AccountsBalancesRequest()
      accounts_balances_response = accounts_balances_request.execute(ally)
      print(accounts_balances_response.get_raw_data())
+
+     # Placing orders -- note that these must use XML as FIXML is passed o the calls
+     account = 00000000
+     # buy one share of intel at $50 for account number 00000000, print the results
+     print(tostring(ally.order_common_stock("INTC", 1, ORDER_TYPE.LIMIT, account,
+            SIDE.BUY, TIME_IN_FORCE.DAY, 50), 'utf-8', method="xml"))
+    # sell one share of Apple at market price for account number 00000000, print the results
+    print(tostring(ally.order_common_stock("AAPL", 1, ORDER_TYPE.MARKET, account, SIDE.SELL),
+        'utf-8', method="xml"))
