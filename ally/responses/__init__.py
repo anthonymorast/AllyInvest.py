@@ -4,3 +4,4 @@ from .account import *          # accounts/:id
 from .accounts import *         # accounts/
 from .quotes import *           # reponse from executing QuotesRequest
 from .account_holdings import *
+from .orders import *
