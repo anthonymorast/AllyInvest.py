@@ -49,6 +49,7 @@ class URLs:
         self.account_holdings = "accounts/{id}/holdings.{format}".format(format=self.format, id="{id}")
 
         # orders
+        self.orders = "accounts/{id}/orders.{format}".format(format=self.format, id="{id}")
         self.post_order = "accounts/{id}/orders.{format}".format(format="xml", id="{id}")
 
         # market
@@ -141,6 +142,9 @@ class URLs:
             POST accounts/:id/orders
             POST accounts/:id/orders/preview
     """
+    def get_orders(self):
+        return self.base_url + self.orders
+
     def get_post_order(self):
         return self.base_url + self.post_order
 
