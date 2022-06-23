@@ -33,9 +33,6 @@ class AllyAPI:
     POST requests supported by Ally Invest.
 
     Missing Functionality:
-        ORDER/TRADE
-            POST accounts/:id/orders
-            POST accounts/:id/orders/preview
         MARKET
             GET market/options/search
             GET market/options/strikes
@@ -279,6 +276,35 @@ class AllyAPI:
 
         return self.__convert_fixml_xml(data)
 
+    def post_order(self, id, fixml):
+        """Posts an order and returns the response.
+            @param self - the object pointer
+            @param id - account number
+            @param fixml - FIXML string to send.
+        """
+        headers = {
+            'TKI_OVERRIDE': 'true',
+            'Content-Type': 'application/xml',
+        }
+        # The GET and POST have the same URL.
+        url = self.url.get_orders().format(id=str(id))
+        return self.__submit_post(url, fixml, headers,
+                                  self.format=='xml')
+
+    def post_order_preview(self, id, fixml):
+        """Posts an order for preview and returns the response.
+            @param self - the object pointer
+            @param id - account number
+            @param fixml - FIXML string to send.
+        """
+        headers = {
+            'TKI_OVERRIDE': 'true',
+            'Content-Type': 'application/xml',
+        }
+        url = self.url.post_order_preview().format(id=str(id))
+        return self.__submit_post(url, fixml, headers,
+                                  self.format=='xml')
+
     def get_market_clock(self):
         """Returns the state of the market, the time until next state change,
             and current server timestamp.
@@ -480,3 +506,4 @@ class ORDER_TYPE:
 class SIDE:
     BUY = "1"
     SELL = "2"
+    SELL_SHORT = "5"

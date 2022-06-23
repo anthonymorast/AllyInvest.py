@@ -64,10 +64,6 @@ raw XML or JSON response from the user depending on the format set up when creat
 the *AllyAPI* class instance.
 
 ## Missing Functionality
-+ ORDER/TRADE
-    + GET accounts/:id/orders
-    + POST accounts/:id/orders
-    + POST accounts/:id/orders/preview
 + MARKET
     + GET market/options/search
     + GET market/options/strikes
