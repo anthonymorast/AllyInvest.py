@@ -19,8 +19,8 @@ class Holding():
         	self.costbasis = json['costbasis']
         if 'cusip' in json['instrument']:
         	self.cusip = json['instrument']['cusip']
-        if 'desc' in json:
-        	self.desc = json['desc']
+        if 'desc' in json['instrument']:
+        	self.desc = json['instrument']['desc']
         if 'factor' in json['instrument']:
         	self.factor = json['instrument']['factor']
         if 'gainloss' in json:
