@@ -19,6 +19,9 @@ from xml.etree import ElementTree
 import datetime
 import requests
 import json
+from collections import defaultdict
+import re
+import copy
 
 from .URLs import URLs
 
@@ -30,10 +33,6 @@ class AllyAPI:
     POST requests supported by Ally Invest.
 
     Missing Functionality:
-        ORDER/TRADE
-            GET accounts/:id/orders
-            POST accounts/:id/orders
-            POST accounts/:id/orders/preview
         MARKET
             GET market/options/search
             GET market/options/strikes
@@ -92,6 +91,94 @@ class AllyAPI:
         if not isinstance(symbols, str): # list
             symbols = ",".join(symbols)
         return symbols
+
+    def __convert_fixml_json(self, json_data):
+        """Takes the order data and converts it to a consistent format.
+           The FIXML message is also expanded, with the original intact.
+            @param self - the object pointer
+            @param json_data - original data to be converted.
+        """
+        # If there's no orders, there's nothing to do.
+        if not json_data["response"]["orderstatus"]["order"]:
+            return json_data
+
+        # Copy the data to keep from overwriting the input.
+        data = copy.deepcopy(json_data)
+
+        # A single order will be a dict, and multiple a list.
+        # Convert order to always be a list of dicts.
+        if isinstance(data["response"]["orderstatus"]["order"], dict):
+            data["response"]["orderstatus"]["order"] = \
+                [data["response"]["orderstatus"]["order"]]
+
+        # Convert the FIXML message in each order.
+        # Add the keys to order itself, but preserve fixmlmessage.
+        for order in data["response"]["orderstatus"]["order"]:
+            order_xml = ElementTree.fromstring(order["fixmlmessage"])
+            order.update(self.__fixml_to_dict(order_xml))
+
+        # Return the converted data.
+        return data
+
+    def __convert_fixml_xml(self, xml_data):
+        """Takes the order data and expands the FIXML message.
+           The original message is left intact.
+            @param self - the object pointer
+            @param xml_data - original data to be converted.
+        """
+        # Register the FIXML namespace.
+        ElementTree.register_namespace("", "http://www.fixprotocol.org/FIXML-5-0-SP2")
+
+        # Copy the data to keep from overwriting the input.
+        data = copy.deepcopy(xml_data)
+
+        # Each order will have a "fixmlmessage" to convert.
+        for order in data.find("orderstatus").findall("order"):
+            fixml_text = order.find("fixmlmessage").text
+            fixml = ElementTree.fromstring(fixml_text)
+            order.append(fixml)
+
+        # Return the converted data.
+        return data
+
+    def __fixml_to_dict(self, fixml):
+        """Recursively convert FIXML to a dictionary.
+            @param self - the object pointer
+            @param fixml - FIXML Element to be converted.
+        """
+        # Remove the Namespace from the tag.
+        tag = re.sub(r"\{[^}]*\} *", "", fixml.tag)
+
+        # Establish the final dictionary to return.
+        ret = {tag: {} if fixml.attrib else None}
+
+        # Recursively convert each subelement.
+        # Each subelement becomes a tag key with a dict value.
+        children = list(fixml)
+        if children:
+            defdict = defaultdict(list)
+            for childdict in map(self.__fixml_to_dict, children):
+                for key, val in childdict.items():
+                    defdict[key].append(val)
+            ret = {tag: {k: v[0] if len(v) == 1 else v
+                           for k, v in defdict.items()}}
+
+        # Set each attribute as a tag key.
+        if fixml.attrib:
+            ret[tag].update(("@" + k, v)
+                              for k, v in fixml.attrib.items())
+
+        # Set the value of each attribute key to the text.
+        if fixml.text:
+            text = fixml.text.strip()
+            if children or fixml.attrib:
+                if text:
+                  ret[tag]["#text"] = text
+            else:
+                ret[tag] = text
+
+        # Return the final dictionary.
+        return ret
 
     def __get_fixml(self, ticker, amount, type, account, side, tif, price, sectype):
         fixml = "<FIXML xmlns=\"http://www.fixprotocol.org/FIXML-5-0-SP2\">"
@@ -177,6 +264,46 @@ class AllyAPI:
             @param id - account number
         """
         return self.__get_data(self.url.account_holdings_url().format(id=str(id)))
+
+    def get_orders(self, id):
+        """Returns the orders of a specific account (ID = account number)
+            @param self - the object pointer
+            @param id - account number
+        """
+        data = self.__get_data(self.url.get_orders().format(id=str(id)))
+        if self.format == "json":
+          return self.__convert_fixml_json(data)
+
+        return self.__convert_fixml_xml(data)
+
+    def post_order(self, id, fixml):
+        """Posts an order and returns the response.
+            @param self - the object pointer
+            @param id - account number
+            @param fixml - FIXML string to send.
+        """
+        headers = {
+            'TKI_OVERRIDE': 'true',
+            'Content-Type': 'application/xml',
+        }
+        # The GET and POST have the same URL.
+        url = self.url.get_orders().format(id=str(id))
+        return self.__submit_post(url, fixml, headers,
+                                  self.format=='xml')
+
+    def post_order_preview(self, id, fixml):
+        """Posts an order for preview and returns the response.
+            @param self - the object pointer
+            @param id - account number
+            @param fixml - FIXML string to send.
+        """
+        headers = {
+            'TKI_OVERRIDE': 'true',
+            'Content-Type': 'application/xml',
+        }
+        url = self.url.post_order_preview().format(id=str(id))
+        return self.__submit_post(url, fixml, headers,
+                                  self.format=='xml')
 
     def get_market_clock(self):
         """Returns the state of the market, the time until next state change,
@@ -379,3 +506,4 @@ class ORDER_TYPE:
 class SIDE:
     BUY = "1"
     SELL = "2"
+    SELL_SHORT = "5"
