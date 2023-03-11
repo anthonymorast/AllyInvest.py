@@ -1,3 +1,4 @@
+LICENSE
 README.md
 setup.py
 AllyInvestPy.egg-info/PKG-INFO
@@ -13,6 +14,9 @@ ally/requests/account_balances.py
 ally/requests/account_holdings.py
 ally/requests/accounts_balances.py
 ally/requests/option_quote.py
+ally/requests/orders.py
+ally/requests/post_order.py
+ally/requests/post_order_preview.py
 ally/requests/quotes.py
 ally/requests/request.py
 ally/responses/__init__.py
@@ -22,6 +26,10 @@ ally/responses/account_holdings.py
 ally/responses/accounts.py
 ally/responses/accounts_balances.py
 ally/responses/holding.py
+ally/responses/order.py
+ally/responses/orders.py
+ally/responses/post_order.py
+ally/responses/post_order_preview.py
 ally/responses/quote.py
 ally/responses/quotes.py
 ally/responses/response.py

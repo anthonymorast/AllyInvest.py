@@ -7,7 +7,8 @@ class Response():
         self.error = ''
 
     def parse_xml(self, data):
-        pass
+        self.xml = data
+        self.error = data.find('error').text
 
     def parse_json(self, data):
         self.json = json.loads(json.dumps(data["response"]))

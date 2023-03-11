@@ -48,6 +48,11 @@ class URLs:
         self.account_history = "accounts/{id}/history.{format}".format(format=self.format, id="{id}")
         self.account_holdings = "accounts/{id}/holdings.{format}".format(format=self.format, id="{id}")
 
+        # orders
+        self.orders = "accounts/{id}/orders.{format}".format(format=self.format, id="{id}")
+        self.order_preview = "accounts/{id}/orders/preview.{format}".format(format=self.format, id="{id}")
+        self.post_order = "accounts/{id}/orders.{format}".format(format="xml", id="{id}")
+
         # market
         self.clock = "market/clock.{format}".format(format=self.format)
         self.quote = "market/ext/quotes.{format}".format(format=self.format)
@@ -138,6 +143,15 @@ class URLs:
             POST accounts/:id/orders
             POST accounts/:id/orders/preview
     """
+    def get_orders(self):
+        return self.base_url + self.orders
+
+    def post_order_preview(self):
+        return self.base_url + self.order_preview
+
+    def get_post_order(self):
+        return self.base_url + self.post_order
+
 
     """
         Market
@@ -176,7 +190,7 @@ class URLs:
             @param self - the object pointer
         """
         return self.base_url + self.toplists
-    
+
     def options_search_url(self):
         return self.base_url + self.options_search
 

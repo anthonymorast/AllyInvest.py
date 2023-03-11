@@ -19,8 +19,8 @@ class Holding():
         	self.costbasis = json['costbasis']
         if 'cusip' in json['instrument']:
         	self.cusip = json['instrument']['cusip']
-        if 'desc' in json:
-        	self.desc = json['desc']
+        if 'desc' in json['instrument']:
+        	self.desc = json['instrument']['desc']
         if 'factor' in json['instrument']:
         	self.factor = json['instrument']['factor']
         if 'gainloss' in json:
@@ -41,8 +41,8 @@ class Holding():
         	self.price = json['price']
         if 'purchaseprice' in json:
         	self.purchaseprice = json['purchaseprice']
-        if 'putcall' in json:
-        	self.putcall = json['putcall']
+        if 'putcall' in json['instrument']:
+        	self.putcall = json['instrument']['putcall']
         if 'qty' in json:
         	self.qty = json['qty']
         if 'sectyp' in json['instrument']:
