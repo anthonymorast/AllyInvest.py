@@ -49,8 +49,8 @@ class Holding():
         	self.qty = json['qty']
         if 'sectyp' in json['instrument']:
         	self.sectyp = json['instrument']['sectyp']
-        if 'strkpx' in json:
-        	self.strkpx = json['strkpx']
+        if 'strkpx' in json['instrument']:
+        	self.strkpx = json['instrument']['strkpx']
         if 'sym' in json['instrument']:
         	self.sym = json['instrument']['sym']
         if 'totalsecurities' in json:
