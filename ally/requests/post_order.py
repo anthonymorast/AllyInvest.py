@@ -2,6 +2,7 @@ from xml.etree import ElementTree
 
 from .request import *
 from ..responses.post_order import *
+from ..responses.order import *
 
 class PostOrderRequest(Request):
     def __init__(self, account_id, order, response_format='json'):

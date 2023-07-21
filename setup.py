@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='AllyInvestPy',
-    version='1.0.16',
+    version='1.0.17',
     description='A blackbox Ally Invest/TradeKing API interface for application developers.',
     url='https://github.com/anthonymorast/AllyInvest.py',
     author='Anthony Morast',
