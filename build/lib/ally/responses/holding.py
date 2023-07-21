@@ -31,8 +31,10 @@ class Holding():
         	self.marketvalue = json['marketvalue']
         if 'marketvaluechange' in json:
         	self.marketvaluechange = json['marketvaluechange']
-        if 'matdt' in json:
-        	self.matdt = json['matdt']
+        if 'matdt' in json['instrument']:   # simplex options use matdt
+        	self.matdt = json['instrument']['matdt']
+        if 'mat' in json['instrument']:     # multilegs use mat
+        	self.matdt = json['instrument']['mat']
         if 'mmy' in json:
         	self.mmy = json['mmy']
         if 'mult' in json:
@@ -47,8 +49,8 @@ class Holding():
         	self.qty = json['qty']
         if 'sectyp' in json['instrument']:
         	self.sectyp = json['instrument']['sectyp']
-        if 'strkpx' in json:
-        	self.strkpx = json['strkpx']
+        if 'strkpx' in json['instrument']:
+        	self.strkpx = json['instrument']['strkpx']
         if 'sym' in json['instrument']:
         	self.sym = json['instrument']['sym']
         if 'totalsecurities' in json:

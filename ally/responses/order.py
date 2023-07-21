@@ -11,7 +11,8 @@ class Order():
         # Stock Symbol.
         self.sym = data.get('sym')
         # Number of Shares.
-        self.qty = str(int(data.get('qty')))
+        if data.get('qty'):
+            self.qty = str(int(data.get('qty', '0')))
         # use class SECURITY_TYPE
         self.sec_typ = str(data.get('sec_typ', ''))
         # use class SIDE
@@ -233,7 +234,7 @@ def get_multileg_fixml(orders, cancel=False):
     # First get the attributes always required.
     base_xml = ElementTree.Element("FIXML", nsp)
     mleg = ElementTree.SubElement(base_xml, order_tag)
-    mleg.set('Acct', chk_dict['acct'])
+    mleg.set('Acct', str(chk_dict['acct']))
     if chk_dict['ord_id']:
         # For a replace or cancel, the original ID is needed.
         mleg.set('OrigCIOrdID', chk_dict['ord_id'])
@@ -247,19 +248,19 @@ def get_multileg_fixml(orders, cancel=False):
         mleg.set('OrdTyp', chk_dict['typ'])
         if chk_dict['typ'] == ORDER_TYPE.LIMIT:
             mleg.set('TmInForce', chk_dict['tm_in_force'])
-            mleg.set('Px', chk_dict['px'])
+            mleg.set('Px', str(chk_dict['px']))
         for order in orders:
             # Cycle through each order and add it.
             ord_el = ElementTree.SubElement(mleg, 'Ord')
-            ord_el.set('OrdQty', order.qty)
-            ord_el.set('PosEfct', order.pos_efct)
+            ord_el.set('OrdQty', str(order.qty))
+            ord_el.set('PosEfct', str(order.pos_efct))
             leg = ElementTree.SubElement(ord_el, 'Leg')
-            leg.set('Side', order.side)
-            leg.set('Strk', order.strk_px)
-            leg.set('Mat', order.mat_dt.isoformat())
-            leg.set('MMY', order.mmy)
-            leg.set('SecTyp', order.sec_typ)
-            leg.set('CFI', order.cfi)
+            leg.set('Side', str(order.side))
+            leg.set('Strk', str(order.strk_px))
+            leg.set('Mat', str(order.mat_dt.isoformat()))
+            leg.set('MMY', str(order.mmy))
+            leg.set('SecTyp', str(order.sec_typ))
+            leg.set('CFI', str(order.cfi))
             leg.set('Sym', order.sym)
 
     return base_xml

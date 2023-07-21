@@ -1,12 +1,11 @@
 Metadata-Version: 2.1
 Name: AllyInvestPy
-Version: 1.0.10
+Version: 1.0.16
 Summary: A blackbox Ally Invest/TradeKing API interface for application developers.
 Home-page: https://github.com/anthonymorast/AllyInvest.py
 Author: Anthony Morast
 Author-email: anthony.a.morast@gmail.com
 License: MIT
-Platform: UNKNOWN
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
@@ -91,5 +90,3 @@ the *AllyAPI* class instance.
 + STREAMING OPERATIONS
     + MARKET
         + GET market/quotes
-
-

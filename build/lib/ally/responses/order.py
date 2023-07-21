@@ -11,7 +11,8 @@ class Order():
         # Stock Symbol.
         self.sym = data.get('sym')
         # Number of Shares.
-        self.qty = str(int(data.get('qty')))
+        if data.get('qty'):
+            self.qty = str(int(data.get('qty', '0')))
         # use class SECURITY_TYPE
         self.sec_typ = str(data.get('sec_typ', ''))
         # use class SIDE

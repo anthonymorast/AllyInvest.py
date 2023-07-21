@@ -16,7 +16,7 @@ class PostOrderRequest(Request):
             for order in self.order:
                 order.validate()
             # Convert to string.
-            fixml_string = ElementTree.tostring(get_multileg_fixml( self.order, cancel=cancel))
+            fixml_string = ElementTree.tostring(get_multileg_fixml(self.order, cancel=cancel))
         else:
             # This is a single-leg option or common stock order.
             # Never trust order contents; always validate it.
